@@ -55,6 +55,9 @@
 <div class="buttons" style="width: 100%;">
     <button id="runBtn">Run</button>
     <button id="resetBtn">Reset Canvas</button>
+    <select id="exampleSelect">
+        <option value="">-- Load Example --</option>
+    </select>
 </div>
 <div class="container">
 
@@ -80,6 +83,48 @@ forward(50);
 <script>
     console.log(turtlejs)
     turtlejs.export_turtle();
+
+    async function loadExamples() {
+        try {
+            const response = await fetch('playground/examples.json');
+            if (!response.ok) {
+                throw new Error('Failed to load examples list');
+            }
+            const examples = await response.json();
+            const selectElement = document.getElementById('exampleSelect');
+
+            examples.forEach(example => {
+                const option = document.createElement('option');
+                option.value = example.file;
+                option.textContent = example.name;
+                selectElement.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error loading examples:', error);
+        }
+    }
+
+    loadExamples();
+
+    document.getElementById('exampleSelect').addEventListener('change', async function() {
+        const selectedFile = this.value;
+        if (!selectedFile) return;
+
+        try {
+            const response = await fetch(`playground/${selectedFile}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load example: ${selectedFile}`);
+            }
+            const code = await response.text();
+            editor.setValue(code);
+            this.value = ''; // Reset selection after loading
+        } catch (error) {
+            console.error('Error loading example file:', error);
+            alert(`Failed to load example: ${error.message}`);
+        }
+    });
+
+
     // Initialize CodeMirror with line numbers and JavaScript mode.
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,

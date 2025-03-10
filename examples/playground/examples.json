@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Simple Square",
+    "file": "square.js"
+  },
+  {
+    "name": "Star",
+    "file": "star.js"
+  },
+  {
+    "name": "Spiral",
+    "file": "spiral.js"
+  }
+]
