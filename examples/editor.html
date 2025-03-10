@@ -84,7 +84,11 @@ forward(50);
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         lineNumbers: true,
         mode: "javascript",
-        theme: "default"
+        theme: "default",
+        extensions: [
+            CodeMirror.basicSetup,
+            CodeMirror.javascript,
+        ],
     });
 
     // Create the turtle instance from the imported turtle.js.
