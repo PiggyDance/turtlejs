@@ -10,5 +10,9 @@
   {
     "name": "Spiral",
     "file": "spiral.js"
+  },
+  {
+    "name": "Koch Snowflake Fractal",
+    "file": "snowflake.js"
   }
 ]
