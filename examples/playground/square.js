@@ -2,22 +2,22 @@
 // This example draws a colorful square with the turtle
 
 // Set up the drawing
-await t.penup();
-await t.goto(-100, -100);
-await t.pendown();
-await t.pensize(5);
-await t.pencolor("blue");
-
+penup();
+goto(-100, -100);
+pendown();
+pensize(5);
+pencolor("blue");
+setheading(90)
 // Draw the square
-await t.begin_fill();
-await t.fillcolor("lightblue");
+begin_fill();
+fillcolor("lightblue");
 for (let i = 0; i < 4; i++) {
-    await t.forward(200);
-    await t.right(90);
+    forward(200);
+    right(90);
 }
-await t.end_fill();
+end_fill();
 
 // Return to center
-await t.penup();
-await t.goto(0, 0);
-await t.pendown();
+penup();
+goto(0, 0);
+pendown();

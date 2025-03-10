@@ -1343,7 +1343,7 @@ export class Turtle {
     async end_fill(fill_rule=defaults.fillRule) {
         return this.#queueOperation(() => {
             let state = this.#saveState('end_fill', [fill_rule]);
-            
+            this.#clearTurtle()
             if (this.#filling && this.#fillPath) {
                 // Close the path
                 this.#fillPath.closePath();
@@ -1357,6 +1357,7 @@ export class Turtle {
                 state.do_fill_path = new Path2D(this.#fillPath);
                 state.fillPath = this.#fillPath = null;
             }
+            this.#drawTurtle();
         });
     }
 
