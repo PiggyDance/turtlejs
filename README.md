@@ -10,6 +10,10 @@ A feature-rich JavaScript implementation of turtle graphics inspired by Python's
 </script>
 ```
 
+## Playground
+
+You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/turtlejs/examples/editor.html). The playground allows you to experiment with turtle graphics directly in your browser.
+
 ## Basic Usage
 
 ```html
