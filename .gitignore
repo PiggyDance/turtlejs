@@ -3,3 +3,4 @@ venv
 dist
 test/dist
 node_modules
+!examples/dist
