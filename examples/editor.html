@@ -84,7 +84,15 @@ forward(50);
     console.log(turtlejs)
     turtlejs.export_turtle();
 
-    async function loadExampleFile(fileName) {
+    let codeChanged = false;
+
+    async function loadExampleFile(fileName, force = false) {
+        if (codeChanged && !force) {
+            const confirmLoad = confirm("You have made changes. Are you sure you want to load a new example?");
+            if (!confirmLoad) {
+                return false;
+            }
+        }
         try {
             const response = await fetch(`playground/${fileName}`);
             if (!response.ok) {
@@ -92,6 +100,7 @@ forward(50);
             }
             const code = await response.text();
             editor.setValue(code);
+            codeChanged = false;
             return true;
         } catch (error) {
             console.error('Error loading example file:', error);
@@ -159,6 +168,10 @@ forward(50);
             CodeMirror.basicSetup,
             CodeMirror.javascript,
         ],
+    });
+
+    editor.on("change", function() {
+        codeChanged = true;
     });
 
     // Create the turtle instance from the imported turtle.js.
