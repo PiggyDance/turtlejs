@@ -76,8 +76,9 @@ forward(50);
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-<script type="module">
-    import {turtlejs} from './dist/turtle.esm.js';
+<script src="./dist/turtle.umd.js"></script>
+<script>
+    console.log(turtlejs)
     turtlejs.export_turtle();
     // Initialize CodeMirror with line numbers and JavaScript mode.
     var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {

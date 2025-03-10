@@ -62,7 +62,7 @@ const keyMap = {
     'right': 'ArrowRight'
 };
 
-class Turtle {
+export class Turtle {
     #delay = 0;
     #canvas;
     #ctx;
@@ -2127,7 +2127,7 @@ class Turtle {
     }
 }
 
-class Screen {
+export class Screen {
     #canvas;
     #ctx;
     #turtles = new Set();
@@ -2721,7 +2721,7 @@ function getDefaultTurtle() {
     return defaultTurtle;
 }
 
-function setDefaultTurtle(turtle) {
+export function setDefaultTurtle(turtle) {
     if (turtle instanceof Turtle) {
         defaultTurtle = turtle;
     } else {
@@ -2730,7 +2730,7 @@ function setDefaultTurtle(turtle) {
     setDefaultScreen(turtle.getscreen());
 }
 
-function setDefaultScreen(screen) {
+export function setDefaultScreen(screen) {
     if (screen instanceof Screen) {
         defaultScreen = screen;
     } else {
@@ -2742,7 +2742,7 @@ function setDefaultScreen(screen) {
 // Export both Turtle and Screen classes
 let turtleExports;
 
-function export_turtle(scope_obj=window) {
+export function export_turtle(scope_obj=window) {
     // Export the turtle graphics functions globally
     for (const [name, func] of Object.entries(turtleExports)) {
         if (typeof func === 'function' || typeof func === 'class') {
@@ -2896,12 +2896,152 @@ const turtlejs = {
     async removeTurtle(turtle) { return await getDefaultScreen().removeTurtle(turtle); },
 }
 turtleExports = turtlejs;
-//export default turtlejs;
 
-export {Turtle, Screen, export_turtle, turtlejs}
+
+// Export turtle movement functions
+export const forward = turtlejs.forward;
+export const fd = turtlejs.fd;
+export const backward = turtlejs.backward;
+export const bk = turtlejs.bk;
+export const back = turtlejs.back;
+export const right = turtlejs.right;
+export const rt = turtlejs.rt;
+export const left = turtlejs.left;
+export const lt = turtlejs.lt;
+export const goto = turtlejs.goto;
+export const setpos = turtlejs.setpos;
+export const setposition = turtlejs.setposition;
+export const teleport = turtlejs.teleport;
+export const setx = turtlejs.setx;
+export const sety = turtlejs.sety;
+export const setheading = turtlejs.setheading;
+export const seth = turtlejs.seth;
+export const home = turtlejs.home;
+
+// Export pen control functions
+export const pendown = turtlejs.pendown;
+export const pd = turtlejs.pd;
+export const down = turtlejs.down;
+export const penup = turtlejs.penup;
+export const pu = turtlejs.pu;
+export const up = turtlejs.up;
+export const pensize = turtlejs.pensize;
+export const width = turtlejs.width;
+export const pen = turtlejs.pen;
+export const isdown = turtlejs.isdown;
+
+// Export color and fill functions
+export const color = turtlejs.color;
+export const pencolor = turtlejs.pencolor;
+export const fillcolor = turtlejs.fillcolor;
+export const filling = turtlejs.filling;
+export const begin_fill = turtlejs.begin_fill;
+export const end_fill = turtlejs.end_fill;
+
+// Export drawing functions
+export const circle = turtlejs.circle;
+export const dot = turtlejs.dot;
+export const stamp = turtlejs.stamp;
+export const clearstamp = turtlejs.clearstamp;
+export const clearstamps = turtlejs.clearstamps;
+export const write = turtlejs.write;
+
+// Export state and position functions
+export const position = turtlejs.position;
+export const pos = turtlejs.pos;
+export const towards = turtlejs.towards;
+export const xcor = turtlejs.xcor;
+export const ycor = turtlejs.ycor;
+export const heading = turtlejs.heading;
+export const distance = turtlejs.distance;
+
+// Export angle measurement functions
+export const degrees = turtlejs.degrees;
+export const radians = turtlejs.radians;
+
+// Export clear and reset functions
+export const reset = turtlejs.reset;
+export const clear = turtlejs.clear;
+
+// Export visibility functions
+export const showturtle = turtlejs.showturtle;
+export const st = turtlejs.st;
+export const hideturtle = turtlejs.hideturtle;
+export const ht = turtlejs.ht;
+export const isvisible = turtlejs.isvisible;
+
+// Export shape functions
+export const shape = turtlejs.shape;
+export const resizemode = turtlejs.resizemode;
+export const shapesize = turtlejs.shapesize;
+export const turtlesize = turtlejs.turtlesize;
+export const tiltangle = turtlejs.tiltangle;
+export const tilt = turtlejs.tilt;
+
+// Export event handlers
+export const onclick = turtlejs.onclick;
+export const onrelease = turtlejs.onrelease;
+export const ondrag = turtlejs.ondrag;
+export const listen = turtlejs.listen;
+export const onkey = turtlejs.onkey;
+export const onkeyrelease = turtlejs.onkeyrelease;
+export const onkeypress = turtlejs.onkeypress;
+export const onscreenclick = turtlejs.onscreenclick;
+export const ontimer = turtlejs.ontimer;
+
+// Export polygon functions
+export const begin_poly = turtlejs.begin_poly;
+export const end_poly = turtlejs.end_poly;
+export const get_poly = turtlejs.get_poly;
+
+// Export turtle management functions
+export const clone = turtlejs.clone;
+export const getturtle = turtlejs.getturtle;
+export const getpen = turtlejs.getpen;
+export const getscreen = turtlejs.getscreen;
+export const setundobuffer = turtlejs.setundobuffer;
+export const undobufferentries = turtlejs.undobufferentries;
+export const undo = turtlejs.undo;
+
+// Export screen functions
+export const bgcolor = turtlejs.bgcolor;
+export const bgpic = turtlejs.bgpic;
+export const clearscreen = turtlejs.clearscreen;
+export const resetscreen = turtlejs.resetscreen;
+export const screensize = turtlejs.screensize;
+export const setworldcoordinates = turtlejs.setworldcoordinates;
+export const delay = turtlejs.delay;
+export const tracer = turtlejs.tracer;
+export const update = turtlejs.update;
+export const mode = turtlejs.mode;
+export const colormode = turtlejs.colormode;
+export const getcanvas = turtlejs.getcanvas;
+export const getshapes = turtlejs.getshapes;
+export const register_shape = turtlejs.register_shape;
+export const addshape = turtlejs.addshape;
+export const turtles = turtlejs.turtles;
+export const window_height = turtlejs.window_height;
+export const window_width = turtlejs.window_width;
+export const title = turtlejs.title;
+
+// Export dialog functions
+export const textinput = turtlejs.textinput;
+export const numinput = turtlejs.numinput;
+
+// Export control functions
+export const bye = turtlejs.bye;
+export const exitonclick = turtlejs.exitonclick;
+export const setup = turtlejs.setup;
+export const mainloop = turtlejs.mainloop;
+export const done = turtlejs.done;
+
+// Export unofficial API methods
+export const colormode_keep_names = turtlejs.colormode_keep_names;
+export const imageRendering = turtlejs.imageRendering;
+
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { Turtle, Screen, export_turtle , turtlejs};
+    module.exports = turtlejs;
 }
 
 // origin: https://www.tcl-lang.org/man/tcl/TkCmd/colors.htm

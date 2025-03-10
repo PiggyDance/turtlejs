@@ -11,7 +11,8 @@
     "test": "jest",
     "localserver":"npm run build && cd examples && (python3 -m http.server 8010 2>/dev/null || true) & sleep 2",
     "local": "npm run localserver && open http://localhost:8010/test.html",
-    "localchrome": "npm run localserver && google-chrome \"http://localhost:8010/test.html\""
+    "localchrome": "npm run localserver && google-chrome \"http://localhost:8010/test.html\"",
+    "localchrome-editor": "npm run localserver && google-chrome \"http://localhost:8010/editor.html\""
   },
   "files": [
     "dist",
