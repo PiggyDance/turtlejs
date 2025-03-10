@@ -84,6 +84,22 @@ forward(50);
     console.log(turtlejs)
     turtlejs.export_turtle();
 
+    async function loadExampleFile(fileName) {
+        try {
+            const response = await fetch(`playground/${fileName}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load example: ${fileName}`);
+            }
+            const code = await response.text();
+            editor.setValue(code);
+            return true;
+        } catch (error) {
+            console.error('Error loading example file:', error);
+            alert(`Failed to load example: ${error.message}`);
+            return false;
+        }
+    }
+
     async function loadExamples() {
         try {
             const response = await fetch('playground/examples.json');
@@ -99,6 +115,15 @@ forward(50);
                 option.textContent = example.name;
                 selectElement.appendChild(option);
             });
+
+            // Check URL query parameter on load
+            const urlParams = new URLSearchParams(window.location.search);
+            const exampleParam = urlParams.get('example');
+            if (exampleParam) {
+                await loadExampleFile(exampleParam);
+                // Update select dropdown to match the loaded example
+                selectElement.value = exampleParam;
+            }
         } catch (error) {
             console.error('Error loading examples:', error);
         }
@@ -108,20 +133,20 @@ forward(50);
 
     document.getElementById('exampleSelect').addEventListener('change', async function() {
         const selectedFile = this.value;
-        if (!selectedFile) return;
-
-        try {
-            const response = await fetch(`playground/${selectedFile}`);
-            if (!response.ok) {
-                throw new Error(`Failed to load example: ${selectedFile}`);
-            }
-            const code = await response.text();
-            editor.setValue(code);
-            this.value = ''; // Reset selection after loading
-        } catch (error) {
-            console.error('Error loading example file:', error);
-            alert(`Failed to load example: ${error.message}`);
+        if (!selectedFile) {
+            // Clear URL parameter if no example is selected
+            history.replaceState(null, '', window.location.pathname);
+            return;
         }
+
+        const success = await loadExampleFile(selectedFile);
+        if (success) {
+            // Update URL with the selected example
+            const url = new URL(window.location);
+            url.searchParams.set('example', selectedFile);
+            history.pushState({}, '', url);
+        }
+        this.value = ''; // Reset selection after loading
     });
 
 
