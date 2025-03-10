@@ -1,0 +1,44 @@
+{
+  "name": "turtlejs",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A feature-rich JavaScript implementation of turtle graphics inspired by Python's turtle module",
+  "main": "index.js",
+  "module": "dist/turtle.esm.js",
+  "browser": "dist/turtle.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "localserver":"npm run build && cd examples && (python3 -m http.server 8010 2>/dev/null || true) & sleep 2",
+    "local": "npm run localserver && open http://localhost:8010/test.html",
+    "localchrome": "npm run localserver && google-chrome \"http://localhost:8010/test.html\""
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shlomil/turtlejs.git"
+  },
+  "keywords": [
+    "turtle",
+    "graphics",
+    "canvas",
+    "drawing",
+    "education",
+    "animation"
+  ],
+  "author": "Shlomi Loubaton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shlomil/turtlejs/issues"
+  },
+  "homepage": "https://github.com/shlomil/turtlejs#readme",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "jest": "^29.7.0",
+    "rollup": "^4.35.0"
+  }
+}

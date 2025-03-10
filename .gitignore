@@ -1,0 +1,6 @@
+venv
+.idea/*
+dist
+test/dist
+examples/dist
+node_modules

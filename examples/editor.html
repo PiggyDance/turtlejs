@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        #editor_container
+        {
+            flex-grow: 1;
+            height: auto;
+            max-height: 50vh;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+
+        .CodeMirror {
+            border-right: 1px solid #ccc;
+            height: 100%;
+        }
+        #canvas_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+        }
+        #turtleCanvas {
+            border: 1px solid #000;
+        }
+
+        .buttons {
+            margin: 10px;
+            text-align: center;
+        }
+
+        .buttons button {
+            margin: 0 5px;
+            padding: 5px 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="buttons" style="width: 100%;">
+    <button id="runBtn">Run</button>
+    <button id="resetBtn">Reset Canvas</button>
+</div>
+<div class="container">
+
+    <div id="editor_container">
+    <textarea id="editor">// Write your turtle code here.>
+// The turtle instance will be passed as the "t" argument.
+// You can use the global turtle methods like forward(), right(), left(), etc.
+// If you want to use return values you must use await: let x = await getx();
+//
+forward(100);
+right(90);
+forward(50);
+</textarea>
+    </div>
+    <div id="canvas_container">
+        <canvas id="turtleCanvas" width="800" height="600"></canvas>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+<script type="module">
+    import {turtlejs} from './dist/turtle.esm.js';
+    turtlejs.export_turtle();
+    // Initialize CodeMirror with line numbers and JavaScript mode.
+    var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        lineNumbers: true,
+        mode: "javascript",
+        theme: "default"
+    });
+
+    // Create the turtle instance from the imported turtle.js.
+    var canvas = document.getElementById("turtleCanvas");
+    var turtleInstance = new turtlejs.Turtle(canvas);
+    turtlejs.setDefaultTurtle(turtleInstance);
+    window['t'] = turtleInstance;
+
+    // Run button: execute code from the editor.
+    document.getElementById("runBtn").addEventListener("click", function () {
+        var code = editor.getValue();
+       try {
+            // Pass the turtle instance as the parameter "turtle" to the new function.
+            var func = new Function(
+                "return (async () => {\n" +
+                code +
+                "\n})();");
+            func();
+       } catch (e) {
+           console.error(e);
+           alert(e);
+       }
+    });
+
+    // Reset button: clear the canvas and call turtle.reset() if available.
+    document.getElementById("resetBtn").addEventListener("click", async function () {
+        if (turtleInstance && typeof turtleInstance.reset === "function") {
+            await turtleInstance.reset();
+        }
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+</script>
+</body>
+</html>

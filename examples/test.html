@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jurtle Graphics Test</title>
+    <style>
+        canvas { cursor: pointer; }
+        #title { 
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            margin: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">Click canvas to start tests</div>
+    <canvas id="turtleCanvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+<!--    <script src="turtle.js" type="module"></script>-->
+    <script type="module">
+        import { Turtle } from './dist/turtle.esm.js';
+        const canvas = document.getElementById('turtleCanvas');
+        const titleDiv = document.getElementById('title');
+        const t = new Turtle(canvas);
+        // t._getstate().then(p => p).then(state => {
+        //     console.log('turtle state:');
+        //     console.log(state);
+        // })
+        (async () => {
+            let state = await t._getstate();
+            console.log('turtle state:');
+            console.log(state);
+        })();
+        console.log(t);
+        
+        let currentTest = -1;
+        
+        const tests = [
+            {
+                name: "Coordinate System Test",
+                async run() {
+                    await t.reset();
+                    await t.setworldcoordinates(-100, -100, 100, 100);
+                    await t.speed(9);
+                    for (let i = 0; i < 360; i += 30) {
+                        await t.goto(0, 0);
+                        await t.setheading(i);
+                        await t.forward(80);
+                    }
+                    await t.setworldcoordinates(-t.window_width()/2, -t.window_height()/2,
+                        t.window_width()/2, t.window_height()/2)
+                }
+            },
+            {
+                name: "Basic Movement and Drawing",
+                async run() {
+                    t.reset();
+                    await t.speed(9);
+                    for (let i = 0; i < 4; i++) {
+                        await t.forward(100);
+                        await t.right(90);
+                    }
+                }
+            },
+            {
+                name: "Keyboard Event Test",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    titleDiv.textContent += " Press arrow keys to move the turtle!";
+                    
+                    // Create a promise that resolves after a few key presses
+                    await new Promise(resolve => {
+                        t.onkey(null)
+                        
+                        t.onkey(async () => {
+                            await t.forward(50);
+                        }, 'ArrowUp');
+                        
+                        t.onkey(async () => {
+                            await t.backward(50);
+                        }, 'ArrowDown');
+                        
+                        t.onkey(async () => {
+                            await t.left(90);
+                        }, 'ArrowLeft');
+                        
+                        t.onkey(async () => {
+                            await t.right(90);
+                        }, 'ArrowRight');
+
+                        t.onkey(async () => {
+                            titleDiv.textContent = titleDiv.textContent.replace(" Press arrow keys to move the turtle!", "");
+                            resolve();
+                        }, 'escape');
+                        
+                        t.onclick(async () => {
+                            titleDiv.textContent = titleDiv.textContent.replace(" Press arrow keys to move the turtle!", "");
+                            resolve();
+                        });
+                    });
+                    t.onkey(null);
+                }
+            },
+            {
+                name: "Click Event Test",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    titleDiv.textContent += "<br>Middle Click anywhere on the canvas!";
+                    
+                    // Create a promise that resolves on canvas click
+                    await new Promise(resolve => {
+                        // Use Turtle's onclick method
+                        t.onclick(async (x, y) => {
+                            // Move turtle to click position
+                            await t.penup();
+                            await t.goto(x, y);
+                            await t.pendown();
+                            
+                            // Draw a small star
+                            await t.color('purple');
+                            await t.begin_fill();
+                            for (let i = 0; i < 5; i++) {
+                                await t.forward(20);
+                                await t.right(144);
+                            }
+                            await t.end_fill();
+                            
+                            // Remove click handler and resolve promise
+                            t.onclick(null);
+                            titleDiv.textContent = titleDiv.textContent.replace("\nClick anywhere on the canvas!", "");
+                            resolve();
+                        }, 2);
+                    });
+                    
+                    
+                }
+            },
+            {
+                name: "Circle and Arc Drawing",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    t.color('blue');
+                    await t.circle(50);  // Full circle
+                    t.color('red');
+                    await t.circle(75, 180);  // Half circle
+                }
+            },    
+            {
+                name: "Fill Operations",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    t.color('purple');
+                    t.begin_fill();
+                    for (let i = 0; i < 5; i++) {
+                         t.forward(100);
+                         t.right(144);
+                    }
+                    await t.end_fill();
+                }
+            },
+            {
+                name: "Text Writing",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    t.penup();
+                    await t.goto(-100, 0);
+                    await t.write("Hello, Turtle!", false, "left", ["Arial", 20, "bold"]);
+                }
+            },
+            {
+                name: "Getters",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    t.penup();
+                    t.setheading(91);
+                    await t.goto(100, 101);
+                    
+                    let data = {
+                        isvisible: await t.isvisible(),
+                        heading: await t.heading(),
+                        pos: await t.pos(),
+                        xcor: await t.xcor(),
+                        ycor: await t.ycor(),
+                        towards: await t.towards(100, 101),
+                        distance: await t.distance(100, 101),
+                        window_width: t.window_width(),
+                        window_height: t.window_height(),
+                        world_width: t.world_width(),
+                        world_height: t.world_height(),
+                    }
+
+                    await t.home()
+                    await t.left(90);
+                    await t.radians();
+                    data.radians_heading = await t.radians();
+
+                    let isok = false;
+                    if (data.isvisible && 
+                        data.heading == 91 && 
+                        data.pos == [100, 101] && 
+                        data.xcor == 100 && 
+                        data.ycor == 101 && 
+                        data.towards == 91 && 
+                        data.distance == 1 && 
+                        data.window_width == 800 && 
+                        data.window_height == 600 && 
+                        data.world_width == 1600 && 
+                        data.world_height == 1200 &&
+                        Math.trunc(data.radians_heading*100000.0) == 157079) {
+                        isok = true;
+                    }
+
+
+                    if (!isok) {
+                        await t.write("OK", false, "left", ["Arial", 20, "bold"]);
+                    } else {
+                        console.log(data);
+                        await t.write("FAIL", false, "left", ["Arial", 20, "bold"]);
+                    }
+                    
+                }
+            },
+
+
+            {
+                name: "Stamping",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    t.color('green');
+                    for (let i = 0; i < 8; i++) {
+                        t.stamp();
+                        await t.forward(50);
+                        await t.right(45);
+                    }
+                    for (let i = 0; i < 8; i++) {
+                        t.stamp();
+                        await t.forward(10);
+                        t.color(['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'brown'][i]);
+                    }
+                }
+            },
+            {
+                name: "Different Shapes",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    const shapes = ['turtle', 'arrow', 'circle', 'square', 'triangle'];
+                    t.penup();
+                    for (let i = 0; i < shapes.length; i++) {
+                        t.shape(shapes[i]);
+                        await t.goto(-200 + i * 100, 0);
+                        t.stamp();
+                    }
+                }
+            },
+            
+            {
+                name: "Speed and Color Changes",
+                async run() {
+                    t.reset();
+                    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+                    for (let i = 0; i < colors.length; i++) {
+                        t.speed(i + 1);
+                        t.color(colors[i]);
+                        await t.forward(100);
+                        await t.right(60);
+                    }
+                }
+            },
+            {
+                name: "Pen Control",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    for (let i = 0; i < 4; i++) {
+                        await t.forward(50);
+                        t.penup();
+                        await t.forward(50);
+                        t.pendown();
+                        await t.right(90);
+                    }
+                }
+            },
+            {
+                name: "Undo Test",
+                async run() {
+                    t.reset();
+                    t.speed(9);
+                    await t.forward(100);
+                    await t.right(90);
+                    await t.forward(100);
+                    t.undo();  // Undo last forward
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    // Draw something else to show the effect
+                    t.color('red');
+                    await t.forward(50);
+                }
+            }
+            
+        ];
+
+        async function runNextTest() {
+            currentTest = (currentTest + 1) % tests.length;
+            const test = tests[currentTest];
+            titleDiv.textContent = `Test ${currentTest + 1}/${tests.length}: ${test.name}`;
+            await test.run();
+        }
+
+        canvas.addEventListener('click', runNextTest);
+        // switch to next test on keypress == arrow right
+        // document.addEventListener('keydown', (e) => {
+        //     if (e.key === 'ArrowRight') {
+        //         runNextTest();
+        //     }
+        // });
+    </script>
+</body>
+</html> 
