@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurtleJS Basic Example</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<canvas id="turtleCanvas" width="600" height="400"></canvas>
+
+<script type="module">
+    import { Turtle } from './dist/turtle.esm.js';
+
+    // Create a turtle instance with the canvas
+    const canvas = document.getElementById('turtleCanvas');
+    const t = new Turtle(canvas);
+
+    // Draw a colorful square spiral
+    async function drawDemo() {
+        t.speed(8);
+
+        // Set pen color and size
+        t.pencolor('blue');
+        t.pensize(2);
+
+        // Draw a simple square
+        for (let i = 0; i < 4; i++) {
+            await t.forward(100);
+            await t.right(90);
+        }
+
+        // Move to a new position
+        await t.penup();
+        await t.goto(-100, 50);
+        await t.pendown();
+
+        // Draw a filled star
+        t.fillcolor('orange');
+        await t.begin_fill();
+        for (let i = 0; i < 5; i++) {
+            await t.forward(80);
+            await t.right(144);
+        }
+        await t.end_fill();
+    }
+
+    // Run the drawing function
+    drawDemo();
+</script>
+</body>
+</html>
