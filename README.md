@@ -15,29 +15,21 @@ A feature-rich JavaScript implementation of turtle graphics inspired by Python's
 You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/turtlejs/examples/editor.html). The playground allows you to experiment with turtle graphics directly in your browser.
 
 ## Basic Usage
-
+draw a square:
 ```html
-<canvas id="turtleCanvas" width="800" height="600"></canvas>
+<script src="./dist/turtle.js"></script>
+<script>
+    export_turtle_globals()
 
-<script type="module">
-  import { Turtle, Screen } from './turtle.js';
-  
-  // Create a screen from canvas
-  const canvas = document.getElementById('turtleCanvas');
-  const screen = new Screen(canvas);
-  
-  // Create a turtle
-  const t = new Turtle(screen);
-  
-  // Draw a square
-  async function drawSquare() {
+    speed(8);
+    teleport(-50,50)
+    pencolor('blue');
+    pensize(2);
+
     for (let i = 0; i < 4; i++) {
-      await t.forward(100);
-      await t.right(90);
+        forward(100);
+        right(90);
     }
-  }
-  
-  drawSquare();
 </script>
 ```
 
@@ -52,6 +44,7 @@ You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/
 - **Text and Stamps**: Write text and create stamps
 - **Event Handling**: Click and keyboard events
 - **Undo Support**: Revert previous operations
+- **optinal asnchronous API**: Use async/await for sequential actions
 
 ## Examples
 
