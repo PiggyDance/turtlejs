@@ -4,9 +4,17 @@ A feature-rich JavaScript implementation of turtle graphics inspired by Python's
 
 ## Installation
 
+You can include TurtleJS in your HTML file by adding the following script tag:
+
+```html
+<script src="turtle.js"></script>
+```
+
+For advanced usage, you can import TurtleJS as a module:
+
 ```html
 <script type="module">
-  import { Turtle, Screen } from './turtle.js';
+  import { Turtle, Screen } from 'turtle.js';
 </script>
 ```
 
