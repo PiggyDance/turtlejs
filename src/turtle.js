@@ -2743,7 +2743,7 @@ export function setDefaultScreen(screen) {
 // Export both Turtle and Screen classes
 let turtleExports;
 
-export function export_turtle(scope_obj=window) {
+export function export_turtle_globals(scope_obj=window) {
     // Export the turtle graphics functions globally
     for (const [name, func] of Object.entries(turtleExports)) {
         if (typeof func === 'function' || typeof func === 'class') {
@@ -2888,7 +2888,7 @@ const turtlejs = {
     async imageRendering(rendering) { return await getDefaultScreen().imageRendering(rendering); },
     setDefaultTurtle,
     setDefaultScreen,
-    export_turtle,
+    export_turtle_globals,
 
     // ?
     async getShape(name) { return await getDefaultScreen().getShape(name); },
