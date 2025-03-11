@@ -62,6 +62,18 @@ const keyMap = {
     'right': 'ArrowRight'
 };
 
+function isWebWorker() {
+    return typeof self !== 'undefined' && typeof window === 'undefined'
+        || (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope);
+}
+
+function isBrowser() {return typeof window !== 'undefined' && typeof document !== 'undefined';}
+
+const is_browser = isBrowser();
+const is_webworker = isWebWorker();
+let WINDOW = is_browser ? window : null;
+let DOCUMENT = is_browser ? document : null;
+
 class Turtle {
     #delay = 0;
     #canvas;
@@ -2703,9 +2715,25 @@ class Screen {
 let defaultTurtle=null;
 let defaultScreen=null;
 
+function createDefaultCanvas(add_to_document=false) {
+    let canvas;
+    if(is_browser) {
+        canvas = DOCUMENT.createElement('canvas');
+        canvas.width = defaults.canvwidth;
+        canvas.height = defaults.canvheight;
+        canvas.style.backgroundColor = defaults.bgcolor;
+        if (add_to_document) {DOCUMENT.body.appendChild(canvas);}
+    } else if (is_webworker || OffscreenCanvas !== undefined) {
+        canvas = new OffscreenCanvas(defaults.width, defaults.height);
+    } else {
+        throw new Error("No canvas support in this environment");
+    }
+    return canvas;
+}
+
 function getDefaultScreen() {
     if (defaultScreen === null) {
-        defaultScreen = new Screen(document.createElement('canvas'), defaults);
+        defaultScreen = new Screen(createDefaultCanvas(true), defaults);
     }
     return defaultScreen;
 }
@@ -2739,7 +2767,7 @@ function setDefaultScreen(screen) {
 // Export both Turtle and Screen classes
 let turtleExports;
 
-function export_turtle_globals(scope_obj=window) {
+function export_turtle_globals(scope_obj=WINDOW) {
     // Export the turtle graphics functions globally
     for (const [name, func] of Object.entries(turtleExports)) {
         if (typeof func === 'function' || typeof func === 'class') {

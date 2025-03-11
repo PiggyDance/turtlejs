@@ -4,42 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TurtleJS Basic Example</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        canvas {
-            border: 1px solid #ccc;
-            background-color: white;
-        }
-    </style>
+    <script src="./dist/turtle.js"></script>
 </head>
 <body>
-<canvas id="turtleCanvas" width="600" height="400"></canvas>
-
 <script type="module">
-    import { Turtle, export_turtle_globals } from './dist/turtle.esm.js';
     export_turtle_globals()
-    const canvas = document.getElementById('turtleCanvas');
-    const t = new Turtle(canvas);
 
-    t.speed(8);
-    t.teleport(-50,50)
-
-    // Set pen color and size
-    t.pencolor('blue');
-    t.pensize(2);
+    speed(8);
+    teleport(-50,50)
+    pencolor('blue');
+    pensize(2);
 
     for (let i = 0; i < 4; i++) {
-        await t.forward(100);
-        await t.right(90);
+        forward(100);
+        right(90);
     }
-
 </script>
 </body>
 </html>
