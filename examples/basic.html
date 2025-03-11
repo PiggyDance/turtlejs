@@ -23,43 +23,23 @@
 <canvas id="turtleCanvas" width="600" height="400"></canvas>
 
 <script type="module">
-    import { Turtle } from './dist/turtle.esm.js';
-
-    // Create a turtle instance with the canvas
+    import { Turtle, export_turtle_globals } from './dist/turtle.esm.js';
+    export_turtle_globals()
     const canvas = document.getElementById('turtleCanvas');
     const t = new Turtle(canvas);
 
-    // Draw a colorful square spiral
-    async function drawDemo() {
-        t.speed(8);
+    t.speed(8);
+    t.teleport(-50,50)
 
-        // Set pen color and size
-        t.pencolor('blue');
-        t.pensize(2);
+    // Set pen color and size
+    t.pencolor('blue');
+    t.pensize(2);
 
-        // Draw a simple square
-        for (let i = 0; i < 4; i++) {
-            await t.forward(100);
-            await t.right(90);
-        }
-
-        // Move to a new position
-        await t.penup();
-        await t.goto(-100, 50);
-        await t.pendown();
-
-        // Draw a filled star
-        t.fillcolor('orange');
-        await t.begin_fill();
-        for (let i = 0; i < 5; i++) {
-            await t.forward(80);
-            await t.right(144);
-        }
-        await t.end_fill();
+    for (let i = 0; i < 4; i++) {
+        await t.forward(100);
+        await t.right(90);
     }
-
-    // Run the drawing function
-    drawDemo();
+    
 </script>
 </body>
 </html>
