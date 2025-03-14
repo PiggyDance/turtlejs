@@ -17,17 +17,18 @@ npm install @shlomil/turtlejs
 You can include TurtleJS in your HTML file by adding the following script tag:
 
 ```html
-<script src="https://unpkg.com/@shlomil/turtlejs@1.0.1/dist/turtle.umd.js"></script>
+<script src="node_modules/@shlomil/turtlejs/dist/turtle.umd.min.js"></script>
+<script>
+    turtlejs.export_turtle_globals()
+    //...
+</script>
 ```
-
 ### Import as a module
 
 ```javascript
-// ES Module
-import { Turtle, Screen } from '@shlomil/turtlejs';
-
-// CommonJS
-const { Turtle, Screen } = require('@shlomil/turtlejs');
+<script type="module">
+    // ES Module
+    import { Turtle, Screen } from '/node_modules/@shlomil/turtlejs/dist/turtle.esm.js';
 ```
 
 ## Playground
@@ -38,9 +39,9 @@ You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/
 
 ### HTML Script Tag
 ```html
-<script src="https://unpkg.com/@shlomil/turtlejs@1.0.1/dist/turtle.umd.js"></script>
+<script src="node_modules/@shlomil/turtlejs/dist/turtle.umd.js"></script>
 <script>
-    export_turtle_globals()
+    turtlejs.export_turtle_globals()
 
     speed(8);
     teleport(-50,50)
@@ -52,26 +53,6 @@ You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/
         right(90);
     }
 </script>
-```
-
-### ES Module
-```javascript
-import { createTurtle } from '@shlomil/turtlejs';
-
-const t = createTurtle();
-t.speed(8);
-t.teleport(-50, 50);
-t.pencolor('blue');
-t.pensize(2);
-
-async function drawSquare() {
-    for (let i = 0; i < 4; i++) {
-        await t.forward(100);
-        await t.right(90);
-    }
-}
-
-drawSquare();
 ```
 
 ## Features
@@ -86,33 +67,6 @@ drawSquare();
 - **Event Handling**: Click and keyboard events
 - **Undo Support**: Revert previous operations
 - **optinal asnchronous API**: Use async/await for sequential actions
-
-## Examples
-
-### Drawing a Spiral
-
-```javascript
-async function drawSpiral() {
-  t.speed(8);
-  for (let i = 0; i < 100; i++) {
-    await t.forward(i * 2);
-    await t.right(90);
-  }
-}
-```
-
-### Drawing a Star
-
-```javascript
-async function drawStar(size) {
-  await t.begin_fill();
-  for (let i = 0; i < 5; i++) {
-    await t.forward(size);
-    await t.right(144);
-  }
-  await t.end_fill();
-}
-```
 
 ## API Reference
 
