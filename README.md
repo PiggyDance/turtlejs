@@ -6,6 +6,20 @@ A feature-rich JavaScript implementation of turtle graphics inspired by Python's
 
 ## Installation
 
+### Using CDN
+You can include TurtleJS in your project using a CDN. Add the following script tag to your HTML file:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@shlomil/turtlejs@1.0.3/dist/turtle.umd.min.js"></script>
+```
+\- or -
+
+```html
+<script type="module">
+    import {Turtle, Screen} from 'https://cdn.jsdelivr.net/npm/@shlomil/turtlejs@1.0.3/dist/turtle.esm.js';
+</script>
+```
+
 ### Using npm
 
 ```bash
