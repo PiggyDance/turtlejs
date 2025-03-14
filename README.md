@@ -1,21 +1,33 @@
 # TurtleJS
 
+[![npm version](https://img.shields.io/npm/v/@shlomil/turtlejs.svg)](https://www.npmjs.com/package/@shlomil/turtlejs)
+
 A feature-rich JavaScript implementation of turtle graphics inspired by Python's `turtle` module. TurtleJS uses HTML canvas for rendering and supports animated drawing operations, coordinate transformations, and most features from Python's turtle graphics.
 
 ## Installation
 
+### Using npm
+
+```bash
+npm install @shlomil/turtlejs
+```
+
+### Direct inclusion in HTML
+
 You can include TurtleJS in your HTML file by adding the following script tag:
 
 ```html
-<script src="turtle.js"></script>
+<script src="https://unpkg.com/@shlomil/turtlejs@1.0.0/dist/turtle.umd.js"></script>
 ```
 
-For advanced usage, you can import TurtleJS as a module:
+### Import as a module
 
-```html
-<script type="module">
-  import { Turtle, Screen } from 'turtle.js';
-</script>
+```javascript
+// ES Module
+import { Turtle, Screen } from '@shlomil/turtlejs';
+
+// CommonJS
+const { Turtle, Screen } = require('@shlomil/turtlejs');
 ```
 
 ## Playground
@@ -23,9 +35,10 @@ For advanced usage, you can import TurtleJS as a module:
 You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/turtlejs/examples/editor.html). The playground allows you to experiment with turtle graphics directly in your browser.
 
 ## Basic Usage
-draw a square:
+
+### HTML Script Tag
 ```html
-<script src="./dist/turtle.js"></script>
+<script src="https://unpkg.com/@shlomil/turtlejs@1.0.0/dist/turtle.umd.js"></script>
 <script>
     export_turtle_globals()
 
@@ -39,6 +52,26 @@ draw a square:
         right(90);
     }
 </script>
+```
+
+### ES Module
+```javascript
+import { createTurtle } from '@shlomil/turtlejs';
+
+const t = createTurtle();
+t.speed(8);
+t.teleport(-50, 50);
+t.pencolor('blue');
+t.pensize(2);
+
+async function drawSquare() {
+    for (let i = 0; i < 4; i++) {
+        await t.forward(100);
+        await t.right(90);
+    }
+}
+
+drawSquare();
 ```
 
 ## Features
@@ -123,7 +156,16 @@ TurtleJS implements most methods from Python's turtle module:
 - Speed values range from 1 (slowest) to 10 (fastest), with 0 for instant drawing
 - Colors accept names, hex values, RGB arrays, and more
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
