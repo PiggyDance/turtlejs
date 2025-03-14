@@ -3,20 +3,33 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A feature-rich JavaScript implementation of turtle graphics inspired by Python's turtle module",
-  "main": "index.js",
+  "main": "dist/turtle.js",
   "module": "dist/turtle.esm.js",
   "browser": "dist/turtle.umd.js",
+  "exports": {
+    ".": {
+      "import": "./dist/turtle.esm.js",
+      "require": "./dist/turtle.js",
+      "browser": "./dist/turtle.umd.js"
+    }
+  },
+  "types": "dist/turtle.d.ts",
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
-    "localserver":"npm run build && cd examples && (python3 -m http.server 8010 2>/dev/null || true) & sleep 2",
+    "prepublishOnly": "npm run build",
+    "pack-check": "npm pack --dry-run",
+    "localserver": "npm run build && cd examples && (python3 -m http.server 8010 2>/dev/null || true) & sleep 2",
     "local": "npm run localserver && open http://localhost:8010/test.html",
     "localchrome": "npm run localserver && google-chrome \"http://localhost:8010/test.html\"",
     "localchrome-editor": "npm run localserver && google-chrome \"http://localhost:8010/editor.html\""
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",
@@ -28,7 +41,14 @@
     "canvas",
     "drawing",
     "education",
-    "animation"
+    "animation",
+    "javascript",
+    "html5",
+    "browser",
+    "creative-coding",
+    "programming",
+    "teaching",
+    "learning"
   ],
   "author": "Shlomi Loubaton",
   "license": "MIT",
@@ -40,6 +60,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/jest-dom": "^6.6.3",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "29.7.0",
     "rollup": "^4.35.0"
   }
 }
