@@ -1,5 +1,5 @@
 {
-  "name": "turtlejs",
+  "name": "@shlomil/turtlejs",
   "version": "1.0.0",
   "type": "module",
   "description": "A feature-rich JavaScript implementation of turtle graphics inspired by Python's turtle module",
