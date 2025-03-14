@@ -55,7 +55,7 @@
   "bugs": {
     "url": "https://github.com/shlomil/turtlejs/issues"
   },
-  "homepage": "https://github.com/shlomil/turtlejs#readme",
+  "homepage": "https://shlomil.github.io/turtlejs/",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@testing-library/jest-dom": "^6.6.3",
