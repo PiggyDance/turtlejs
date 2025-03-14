@@ -17,7 +17,7 @@ npm install @shlomil/turtlejs
 You can include TurtleJS in your HTML file by adding the following script tag:
 
 ```html
-<script src="https://unpkg.com/@shlomil/turtlejs@1.0.0/dist/turtle.umd.js"></script>
+<script src="https://unpkg.com/@shlomil/turtlejs@1.0.1/dist/turtle.umd.js"></script>
 ```
 
 ### Import as a module
@@ -38,7 +38,7 @@ You can try out TurtleJS in the [TurtleJS Playground](https://shlomil.github.io/
 
 ### HTML Script Tag
 ```html
-<script src="https://unpkg.com/@shlomil/turtlejs@1.0.0/dist/turtle.umd.js"></script>
+<script src="https://unpkg.com/@shlomil/turtlejs@1.0.1/dist/turtle.umd.js"></script>
 <script>
     export_turtle_globals()
 
